@@ -3,13 +3,13 @@ from flask_cors import CORS
 import pickle
 import json
 
-app = Flask(__name__)
+app = Flask("Capro")
 CORS(app)
+
 
 # função para fazer busca no banco
 def SearchCulture(yesterday, yesterday_1, yesterday_diff, last_week, last_month, last_year):
     
-    print("salve")
     loaded_model = pickle.load(open('./soy_quotation_lr.sav', 'rb'))
     result = loaded_model.predict([[yesterday, yesterday_1, yesterday_diff, last_week, last_month, last_year]])
     resultStr = str(result).replace('[', '').replace(']', '')
@@ -55,6 +55,7 @@ def Responses(status, message, name_content=False, content=False):
         response[name_content] = content
 
     return response
+
 
 if __name__ == '__main__':
     app.run()
