@@ -57,4 +57,4 @@ def Responses(status, message, name_content=False, content=False):
     return response
 
 if __name__ == '__main__':
-    my_awesome_app.run()
+    app.run()
