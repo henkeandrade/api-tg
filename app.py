@@ -8,10 +8,10 @@ CORS(app)
 
 
 # função para fazer busca no banco
-def SearchCulture(yesterday, yesterday_1, yesterday_diff, last_week, last_month, last_year):
+def SearchCulture(yesterday, yesterday_1, yesterday_diff):
     
     loaded_model = pickle.load(open('./soy_quotation_lr.sav', 'rb'))
-    result = loaded_model.predict([[yesterday, yesterday_1, yesterday_diff, last_week, last_month, last_year]])
+    result = loaded_model.predict([[yesterday, yesterday_1, yesterday_diff]])
     resultStr = str(result).replace('[', '').replace(']', '')
 
     return { 'result': float(resultStr) }
@@ -31,16 +31,7 @@ def SearchCultureRequest():
     if("yesterday_diff" not in body):
         return Responses(400, "O campo yesterday_diff é obrigatório!")
 
-    if("last_week" not in body):
-        return Responses(400, "O campo last_week é obrigatório!")
-
-    if("last_month" not in body):
-        return Responses(400, "O campo last_month é obrigatório!")
-
-    if("last_year" not in body):
-        return Responses(400, "O campo last_year é obrigatório!")
-
-    dataSearch = SearchCulture(body["yesterday"], body["yesterday_1"], body["yesterday_diff"], body["last_week"], body["last_month"], body["last_year"])
+    dataSearch = SearchCulture(body["yesterday"], body["yesterday_1"], body["yesterday_diff"])
 
     return Responses(200, "Busca realizada com sucesso", "busca", dataSearch)
 
