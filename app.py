@@ -11,7 +11,7 @@ CORS(app)
 def SearchCulture(yesterday, yesterday_1, yesterday_diff):
     
     loaded_model = pickle.load(open('./soy_quotation_lr.sav', 'rb'))
-    result = loaded_model.predict([[yesterday, yesterday_1, yesterday_diff]])
+    result = loaded_model.predict([[yesterday, yesterday_diff, yesterday_1]])
     resultStr = str(result).replace('[', '').replace(']', '')
 
     return { 'result': float(resultStr) }
